@@ -45,6 +45,7 @@ body {
   outline: none;
   font-family: Montserrat;
   font-size: 20px;
+  padding-left: 20px;
 }
 .form-input:hover {
   cursor: pointer;
@@ -69,4 +70,26 @@ body {
   text-align: center;
   font-size: 30px;
   color: white;
+}
+
+
+
+@media (max-width: 800px) {
+  .App-info {
+    width: 560px;
+
+  }
+}
+
+@media (max-width: 568px) {
+  .App-info {
+    width: 300px;
+
+  }
+  .form-block {
+    flex-direction: column;
+  }
+  .form-input {
+    width: 90%;
+  }
 }

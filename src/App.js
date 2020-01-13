@@ -6,16 +6,19 @@ import CountryInfo from './components/CountryInfo';
 import './App.css';
 
 class App extends React.Component {
-
-  state = {
-    country: undefined,
-    capital: undefined,
-    continent: undefined,
-    population: undefined,
-    area: undefined,
-    flag: undefined,
-    currency: undefined,
-    error: undefined
+  constructor(props) {
+    super(props);
+    this.state = {
+      country: undefined,
+      capital: undefined,
+      continent: undefined,
+      population: undefined,
+      area: undefined,
+      flag: undefined,
+      currency: undefined,
+      error: undefined
+    }
+    this.gettingCountry = this.gettingCountry.bind(this);
   }
 
     gettingCountry = async(event) => {
@@ -26,37 +29,37 @@ class App extends React.Component {
           error: 'Введите название страны'
         })
       } else {
+
         const info = await fetch(`https://restcountries.eu/rest/v2/name/${value}`);
         const data = await info.json();
-          data.filter((count) => {
-            if(value === count['name'] && value.length === count['name'].length) {
-              console.log(count['name']);
-              this.setState({
-                country: data[0]['name'],
-                capital: data[0]['capital'],
-                continent: data[0]['region'],
-                population: data[0]['population'],
-                area: data[0]['area'],
-                flag: data[0]['flag'],
-                currency: data[0]['currencies'][0]['name'],
-                error: undefined
-              })
-            } else {
-              this.setState({
-                country: undefined,
-                capital: undefined,
-                continent: undefined,
-                population: undefined,
-                area: undefined,
-                flag: undefined,
-                currency: undefined,
-                error: 'Введите название страны корректно. Рекомендую вам посмотреть правильное и полное название в wikipedia'
-              })
-              console.log('неккоректно');
-            }
-          })
+        for (let key in data) {
+          if(value === data[key]['name'] && value.length === data[key]['name'].length) {
+            this.setState({
+              country: data[key]['name'],
+              capital: data[key]['capital'],
+              continent: data[key]['region'],
+              population: data[key]['population'],
+              area: data[key]['area'],
+              flag: data[key]['flag'],
+              currency: data[key]['currencies'][0]['name'],
+              error: undefined
+            })
+          } else {
+            this.setState({
+              country: undefined,
+              capital: undefined,
+              continent: undefined,
+              population: undefined,
+              area: undefined,
+              flag: undefined,
+              currency: undefined,
+              error: 'Введите название страны корректно. Рекомендую вам посмотреть правильное и полное название в wikipedia'
+            })
+            console.log('неккоректно');
+          }
         }
       }
+    }
 
   render() {
     return (
